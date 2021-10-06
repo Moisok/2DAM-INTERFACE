@@ -137,9 +137,9 @@ public class TeaAppV2 {
 		JButton btnCostumizate = new JButton("Costumizate");
 		btnCostumizate.setBounds(12, 232, 124, 27);
 		frame.getContentPane().add(btnCostumizate);
-		
-		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, 0);
 		Botonper(textPane, button, rdbtnRedTea, rdbtnBlackTea, rdbtnGreenTea, btnCostumizate);
+		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, 0);
+		
 	}
 
 	//Boton personalizado
@@ -147,12 +147,16 @@ public class TeaAppV2 {
 	JRadioButton rdbtnGreenTea, JButton btnCostumizate) {
 		btnCostumizate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			String jFrame = "Put time";
+				try {
+			String jFrame = "Put minutes";
 			String getMessage = JOptionPane.showInputDialog(jFrame);
-			int seconds2 = Integer.parseInt(getMessage);
-			int seconds3 = seconds2;
-			JOptionPane.showInputDialog(jFrame, "You put: "+ seconds3 + " seconds");
-			FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, seconds3);
+			int seconds = Integer.parseInt(getMessage);
+			JOptionPane.showInputDialog(jFrame, "You put: "+ seconds + " minutes");	
+			FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, seconds);
+				}
+			catch (Exception b) {
+				System.out.println ("Has cancelado");
+			}
 				}
 			});
 	}
@@ -160,75 +164,72 @@ public class TeaAppV2 {
 	//Funcion calcula
 	//Pasamos a la funcion los datos 
 	private void FuncionCalcula (JRadioButton rdbtnRedTea, JRadioButton rdbtnGreenTea, 
-	JRadioButton rdbtnblackTea, JTextPane time, Button Star, int seconds2){ 
-	Star.addActionListener (new ActionListener(){
-		//Variable
-		int seconds3 = seconds2;
-		int seconds;
-		int minutes = 0;
-		String sound = "second.wav";
+	JRadioButton rdbtnblackTea, JTextPane time, Button Star, int minutes2){ 
 		
+	Star.addActionListener (new ActionListener(){
 		//Timer
+		//Variable
+		int seconds = 1;
+		int minutes = minutes2;
+		String sound = "second.wav";
+		String ready = "ready.wav";
 		Timer timer1 = new Timer(1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
             	seconds = seconds - 1;
-            	seconds3 = seconds3 -1;
             	ReproducirSonido(sound);
-            		if (seconds > 10) {
-            			time.setText("0" + minutes + ":" + seconds);
-            		}
-            		if (seconds < 10) {
-            			time.setText("0" + minutes + ":0" + seconds);
-            		}
-            		if (seconds == 0) {
-            			seconds = 60;
-            			minutes = minutes - 1;
-                   	}
-            		if (seconds3 > 0 ||  !rdbtnblackTea.isSelected() || !rdbtnblackTea.isSelected() || !rdbtnGreenTea.isSelected()) {
-            			time.setText (seconds3 + " ");
-            		}
-            		if (minutes < 0 || seconds3 <= 0) {
-            			timer1.stop();
-            			String ready = "ready.wav";
-						ReproducirSonido(ready);
-            			time.setText("Tea ready!");
-            		}
-            		
+            	time.setText( minutes + ":" + seconds);
+            	if (seconds == 0) {
+            		seconds = 60;
+            		minutes = minutes - 1;
+            	}
+            	if(minutes == 0) {
+					timer1.stop();
+					ReproducirSonido(ready);
+					time.setText( "Finish");	
+				}
             }
+          
         });
+		
+		
 		
 		//Boton Start!
 		public void actionPerformed (ActionEvent e) {
+
 			if (rdbtnRedTea.isSelected()) {	
+				seconds = 60;
 				minutes = 0;
-				seconds = 60;
 				timer1.start();
         	}
 			
-			if (rdbtnblackTea.isSelected()) {	
+			if (rdbtnblackTea.isSelected()) {
+				seconds = 60;
 				minutes = 4;
-				seconds = 60;
 				timer1.start();
+				
         	}
 			
-			if (rdbtnGreenTea.isSelected()) {	
-				minutes = 3;
+			if (rdbtnGreenTea.isSelected()) {
 				seconds = 60;
+				minutes = 1;
 				timer1.start();
         	}
-			else {
+			if (!rdbtnRedTea.isSelected() || !rdbtnblackTea.isSelected() || !rdbtnGreenTea.isSelected()) {
 				timer1.start();
+
 			}
+			
+			
 		}
 		
 	});
 	
 	
-	
+	 
 
 	}
-	
+
 	//Metodo para reproducir sonidos
 		public static void ReproducirSonido(String ready){
 		       try {
