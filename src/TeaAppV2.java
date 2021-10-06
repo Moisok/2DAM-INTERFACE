@@ -139,25 +139,26 @@ public class TeaAppV2 {
 		frame.getContentPane().add(btnCostumizate);
 		
 		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, 0);
-		
+		Botonper(textPane, button, rdbtnRedTea, rdbtnBlackTea, rdbtnGreenTea, btnCostumizate);
+	}
+
+	//Boton personalizado
+	private void Botonper(JTextPane textPane, Button button, JRadioButton rdbtnRedTea, JRadioButton rdbtnBlackTea,
+	JRadioButton rdbtnGreenTea, JButton btnCostumizate) {
 		btnCostumizate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			String jFrame = "Put time";
 			String getMessage = JOptionPane.showInputDialog(jFrame);
 			int seconds2 = Integer.parseInt(getMessage);
 			int seconds3 = seconds2;
-			for (int i = 0; i<seconds3; i++) {
-				System.out.println (seconds3 - i);
-			}
 			JOptionPane.showInputDialog(jFrame, "You put: "+ seconds3 + " seconds");
 			FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, seconds3);
 				}
 			});
-	
-		
 	}
 		
-	//Pasamos a la funcion los datos
+	//Funcion calcula
+	//Pasamos a la funcion los datos 
 	private void FuncionCalcula (JRadioButton rdbtnRedTea, JRadioButton rdbtnGreenTea, 
 	JRadioButton rdbtnblackTea, JTextPane time, Button Star, int seconds2){ 
 	Star.addActionListener (new ActionListener(){
@@ -179,14 +180,14 @@ public class TeaAppV2 {
             		}
             		if (seconds < 10) {
             			time.setText("0" + minutes + ":0" + seconds);
-            			if (seconds3 > 0 ||  !rdbtnblackTea.isSelected() || !rdbtnblackTea.isSelected() || !rdbtnGreenTea.isSelected()) {
-                			time.setText (seconds3 + " ");
-                		}
             		}
             		if (seconds == 0) {
             			seconds = 60;
             			minutes = minutes - 1;
                    	}
+            		if (seconds3 > 0 ||  !rdbtnblackTea.isSelected() || !rdbtnblackTea.isSelected() || !rdbtnGreenTea.isSelected()) {
+            			time.setText (seconds3 + " ");
+            		}
             		if (minutes < 0 || seconds3 <= 0) {
             			timer1.stop();
             			String ready = "ready.wav";
