@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -30,7 +31,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 //
 
 
@@ -69,7 +72,7 @@ public class TeaAppV2 {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+        
 		ButtonGroup teaType = new ButtonGroup();
 		
 		frame = new JFrame();
@@ -130,18 +133,37 @@ public class TeaAppV2 {
 		rdbtnGreenTea.setFont(new Font("Roboto", Font.BOLD, 13));
 		teaType.add(rdbtnGreenTea);
 		
-		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button);
+		//Boton
+		JButton btnCostumizate = new JButton("Costumizate");
+		btnCostumizate.setBounds(12, 232, 124, 27);
+		frame.getContentPane().add(btnCostumizate);
+		
+		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, 0);
+		
+		btnCostumizate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			String jFrame = "Put time";
+			String getMessage = JOptionPane.showInputDialog(jFrame);
+			int seconds2 = Integer.parseInt(getMessage);
+			int seconds3 = seconds2;
+			for (int i = 0; i<seconds3; i++) {
+				System.out.println (seconds3 - i);
+			}
+			JOptionPane.showInputDialog(jFrame, "You put: "+ seconds3 + " seconds");
+			FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, seconds3);
+				}
+			});
+	
 		
 	}
 		
-		//Pasamos a la funcion los datos
-		private void FuncionCalcula (JRadioButton rdbtnRedTea, JRadioButton rdbtnGreenTea, 
-					JRadioButton rdbtnblackTea, JTextPane time, Button Star){ 
-		
+	//Pasamos a la funcion los datos
+	private void FuncionCalcula (JRadioButton rdbtnRedTea, JRadioButton rdbtnGreenTea, 
+	JRadioButton rdbtnblackTea, JTextPane time, Button Star, int seconds2){ 
 	Star.addActionListener (new ActionListener(){
-		
 		//Variable
-		int seconds = 0;
+		int seconds3 = seconds2;
+		int seconds;
 		int minutes = 0;
 		String sound = "second.wav";
 		
@@ -150,18 +172,22 @@ public class TeaAppV2 {
             @Override
             public void actionPerformed(ActionEvent e) {
             	seconds = seconds - 1;
+            	seconds3 = seconds3 -1;
             	ReproducirSonido(sound);
             		if (seconds > 10) {
             			time.setText("0" + minutes + ":" + seconds);
             		}
             		if (seconds < 10) {
-            			time.setText("0" + minutes + ":0" + seconds);	
+            			time.setText("0" + minutes + ":0" + seconds);
+            			if (seconds3 > 0 ||  !rdbtnblackTea.isSelected() || !rdbtnblackTea.isSelected() || !rdbtnGreenTea.isSelected()) {
+                			time.setText (seconds3 + " ");
+                		}
             		}
             		if (seconds == 0) {
             			seconds = 60;
             			minutes = minutes - 1;
                    	}
-            		if (minutes < 0) {
+            		if (minutes < 0 || seconds3 <= 0) {
             			timer1.stop();
             			String ready = "ready.wav";
 						ReproducirSonido(ready);
@@ -173,7 +199,6 @@ public class TeaAppV2 {
 		
 		//Boton Start!
 		public void actionPerformed (ActionEvent e) {
-			timer1.stop();
 			if (rdbtnRedTea.isSelected()) {	
 				minutes = 0;
 				seconds = 60;
@@ -191,8 +216,10 @@ public class TeaAppV2 {
 				seconds = 60;
 				timer1.start();
         	}
+			else {
+				timer1.start();
+			}
 		}
-			
 		
 	});
 	
@@ -200,7 +227,7 @@ public class TeaAppV2 {
 	
 
 	}
-		
+	
 	//Metodo para reproducir sonidos
 		public static void ReproducirSonido(String ready){
 		       try {
