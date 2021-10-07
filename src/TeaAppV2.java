@@ -106,7 +106,7 @@ public class TeaAppV2 {
 		JRadioButton rdbtnRedTea = new JRadioButton("Red Tea");
 		rdbtnRedTea.setBorderPainted(true);
 		rdbtnRedTea.setBackground(Color.GRAY);
-		rdbtnRedTea.setBounds(21, 90, 97, 67);
+		rdbtnRedTea.setBounds(21, 79, 97, 67);
 		frame.getContentPane().add(rdbtnRedTea);
 		//rdbtnRedTea.setOpaque(false);
 		rdbtnRedTea.setForeground(Color.red);
@@ -116,7 +116,7 @@ public class TeaAppV2 {
 		JRadioButton rdbtnBlackTea = new JRadioButton("Black Tea");
 		rdbtnBlackTea.setBorderPainted(true);
 		rdbtnBlackTea.setBackground(Color.GRAY);
-		rdbtnBlackTea.setBounds(21, 161, 97, 67);
+		rdbtnBlackTea.setBounds(21, 147, 97, 67);
 		frame.getContentPane().add(rdbtnBlackTea);
 		//rdbtnBlackTea.setOpaque(false);
 		rdbtnBlackTea.setForeground(Color.black);
@@ -126,109 +126,111 @@ public class TeaAppV2 {
 		JRadioButton rdbtnGreenTea = new JRadioButton("Green Tea");
 		rdbtnGreenTea.setBorderPainted(true);
 		rdbtnGreenTea.setBackground(Color.GRAY);
-		rdbtnGreenTea.setBounds(21, 19, 97, 67);
+		rdbtnGreenTea.setBounds(21, 11, 97, 67);
 		frame.getContentPane().add(rdbtnGreenTea);
 		//rdbtnGreenTea.setOpaque(false);
 		rdbtnGreenTea.setForeground(Color.green);
 		rdbtnGreenTea.setFont(new Font("Roboto", Font.BOLD, 13));
 		teaType.add(rdbtnGreenTea);
+		//Custom
+		JRadioButton Custom = new JRadioButton("Custom Tea");
+		Custom.setForeground(Color.ORANGE);
+		Custom.setFont(new Font("Roboto", Font.BOLD, 13));
+		Custom.setBorderPainted(true);
+		Custom.setBackground(Color.GRAY);
+		Custom.setBounds(12, 220, 112, 55);
+		frame.getContentPane().add(Custom);
+		teaType.add(Custom);
 		
 		//Boton
-		JButton btnCostumizate = new JButton("Costumizate");
-		btnCostumizate.setBounds(12, 232, 124, 27);
-		frame.getContentPane().add(btnCostumizate);
+		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea,Custom, textPane, button);
 		
-		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, 0);
-		Botonper(textPane, button, rdbtnRedTea, rdbtnBlackTea, rdbtnGreenTea, btnCostumizate);
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("/home/moiseg/eclipse-workspace/2DAM-INTERFACE/Tea.gif"));
+		lblNewLabel.setBounds(153, 170, 209, 105);
+		frame.getContentPane().add(lblNewLabel);
+		
+	
+		
 	}
 
-	//Boton personalizado
-	private void Botonper(JTextPane textPane, Button button, JRadioButton rdbtnRedTea, JRadioButton rdbtnBlackTea,
-	JRadioButton rdbtnGreenTea, JButton btnCostumizate) {
-		btnCostumizate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			String jFrame = "Put time";
-			String getMessage = JOptionPane.showInputDialog(jFrame);
-			int seconds2 = Integer.parseInt(getMessage);
-			int seconds3 = seconds2;
-			JOptionPane.showInputDialog(jFrame, "You put: "+ seconds3 + " seconds");
-			FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea, textPane, button, seconds3);
-				}
-			});
-	}
+	
 		
 	//Funcion calcula
 	//Pasamos a la funcion los datos 
 	private void FuncionCalcula (JRadioButton rdbtnRedTea, JRadioButton rdbtnGreenTea, 
-	JRadioButton rdbtnblackTea, JTextPane time, Button Star, int seconds2){ 
-	Star.addActionListener (new ActionListener(){
-		//Variable
-		int seconds3 = seconds2;
-		int seconds;
-		int minutes = 0;
-		String sound = "second.wav";
+	JRadioButton rdbtnblackTea, JRadioButton Custom, JTextPane time, Button Star){ 
 		
+	Star.addActionListener (new ActionListener(){
 		//Timer
+		//Variable
+		int seconds = 1;
+		int minutes = 0;
+		int minutesToInt;
+		String sound = "second.wav";
+		String ready = "ready.wav";
 		Timer timer1 = new Timer(1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
             	seconds = seconds - 1;
-            	seconds3 = seconds3 -1;
             	ReproducirSonido(sound);
-            		if (seconds > 10) {
-            			time.setText("0" + minutes + ":" + seconds);
-            		}
-            		if (seconds < 10) {
-            			time.setText("0" + minutes + ":0" + seconds);
-            		}
-            		if (seconds == 0) {
-            			seconds = 60;
-            			minutes = minutes - 1;
-                   	}
-            		if (seconds3 > 0 ||  !rdbtnblackTea.isSelected() || !rdbtnblackTea.isSelected() || !rdbtnGreenTea.isSelected()) {
-            			time.setText (seconds3 + " ");
-            		}
-            		if (minutes < 0 || seconds3 <= 0) {
-            			timer1.stop();
-            			String ready = "ready.wav";
-						ReproducirSonido(ready);
-            			time.setText("Tea ready!");
-            		}
-            		
+            	time.setText( minutes + ":" + seconds);
+            	System.out.println(seconds);
+            	if (seconds == 0) {
+            		seconds = 60;
+            		minutes = minutes - 1;
+            	}
+            	if(minutes < 0) {
+            		ReproducirSonido(ready);
+					timer1.stop();
+					time.setText( "Finish");
+				}
             }
+          
         });
 		
+
 		//Boton Start!
 		public void actionPerformed (ActionEvent e) {
 			if (rdbtnRedTea.isSelected()) {	
+				seconds = 60;
 				minutes = 0;
-				seconds = 60;
 				timer1.start();
         	}
 			
-			if (rdbtnblackTea.isSelected()) {	
+			if (rdbtnblackTea.isSelected()) {
+				seconds = 60;
 				minutes = 4;
-				seconds = 60;
 				timer1.start();
+        	}			
+	
+			if (rdbtnGreenTea.isSelected()) {
+				seconds = 60;
+				minutes = 1;
+				timer1.start();
+        	}
+			if (Custom.isSelected()) {
+				try {
+				String jFrame = "Put minutes";
+				String getMessage = JOptionPane.showInputDialog(jFrame);
+				minutesToInt = Integer.parseInt(getMessage);
+				minutes = minutesToInt;
+				timer1.start();
+				}
+				catch (Exception b) {
+					System.err.println("Has cerrado el configurador");
+				}
         	}
 			
-			if (rdbtnGreenTea.isSelected()) {	
-				minutes = 3;
-				seconds = 60;
-				timer1.start();
-        	}
-			else {
-				timer1.start();
-			}
 		}
 		
 	});
 	
 	
-	
+	 
 
 	}
-	
+
 	//Metodo para reproducir sonidos
 		public static void ReproducirSonido(String ready){
 		       try {
@@ -236,8 +238,8 @@ public class TeaAppV2 {
 		        Clip clip = AudioSystem.getClip();
 		        clip.open(audioInputStream);
 		        clip.start();
-		       } catch(UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-		         System.out.println("Error al reproducir el sonido.");
+		       } catch(Exception e) { //UnsupportedAudioFileException | IOException | LineUnavailableException ex*/
+		         System.err.println("Error al reproducir el sonidito");
 		       }
 		     }
 }
