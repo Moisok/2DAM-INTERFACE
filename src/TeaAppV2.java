@@ -53,7 +53,7 @@ public class TeaAppV2 {
 					window.frame.setTitle("TeaTimerApp :) By Moises Sepulveda");
 					window.frame.setResizable(false);
 					String start = "start.wav";
-					ReproducirSonido(start);
+					//ReproducirSonido(start);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -141,12 +141,10 @@ public class TeaAppV2 {
 		Custom.setBounds(0, 246, 118, 86);
 		frame.getContentPane().add(Custom);
 		teaType.add(Custom);
+	}
 		
 		//Boton
-		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea,Custom, textPane, button);
-		
-	
-		
+		/*FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea,Custom, textPane, button);
 	}
 
 	
@@ -155,41 +153,40 @@ public class TeaAppV2 {
 	//Pasamos a la funcion los datos 
 	private void FuncionCalcula (JRadioButton rdbtnRedTea, JRadioButton rdbtnGreenTea, 
 	JRadioButton rdbtnblackTea, JRadioButton Custom, JTextPane time, Button Star){ 
-		
 	Star.addActionListener (new ActionListener(){
 		//Timer
 		//Variable
-		int seconds = 1;
+		String put;
+		String getMinutes;
+		int seconds;
 		int minutes = 0;
 		int minutesToInt;
 		String sound = "second.wav";
 		String ready = "ready.wav";
+		//Timer
 		Timer timer1 = new Timer(1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
             	seconds = seconds - 1;
             	ReproducirSonido(sound);
             	time.setText( minutes + ":" + seconds);
-            	System.out.println(seconds);
             	if (seconds == 0) {
             		seconds = 60;
             		minutes = minutes - 1;
             	}
             	if(minutes < 0) {
-            		ReproducirSonido(ready);
 					timer1.stop();
-					time.setText( "Finish");
-					System.restart();
+					ReproducirSonido(ready);
+					time.setText( "Finish");	
 				}
             }
           
         });
 		
-
 		//Boton Start!
 		public void actionPerformed (ActionEvent e) {
 			if (rdbtnRedTea.isSelected()) {	
-				seconds = 60;
+				seconds = 10;
 				minutes = 0;
 				timer1.start();
         	}
@@ -205,37 +202,30 @@ public class TeaAppV2 {
 				minutes = 1;
 				timer1.start();
         	}
-			if (Custom.isSelected()) {
-				try {
-				String jFrame = "Put minutes";
-				String getMessage = JOptionPane.showInputDialog(jFrame);
-				minutesToInt = Integer.parseInt(getMessage);
+			if (Custom.isSelected()) {	
+				seconds = 1;
+				put = "Put minutes";
+				getMinutes = JOptionPane.showInputDialog(put);
+				minutesToInt = Integer.parseInt(getMinutes);
 				minutes = minutesToInt;
 				timer1.start();
-				}
-				catch (Exception b) {
-					System.err.println("Has cerrado el configurador");
-				}
         	}
 			
 		}
 		
 	});
-	
-	
-	 
-
-	}
+}*/
 
 	//Metodo para reproducir sonidos
-		public static void ReproducirSonido(String ready){
-		       try {
-		        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(ready).getAbsoluteFile());
+		public static void ReproducirSonido(String x){
+			try {
+		        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(x).getAbsoluteFile());
 		        Clip clip = AudioSystem.getClip();
 		        clip.open(audioInputStream);
 		        clip.start();
-		       } catch(Exception e) { //UnsupportedAudioFileException | IOException | LineUnavailableException ex*/
+		       } catch(Exception e) { 
 		         System.err.println("Error al reproducir el sonidito");
 		       }
 		     }
+
 }
