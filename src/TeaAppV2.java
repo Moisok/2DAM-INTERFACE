@@ -78,7 +78,7 @@ public class TeaAppV2 {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		frame.getContentPane().setForeground(Color.GRAY);
-		frame.setBounds(100, 100, 471, 320);
+		frame.setBounds(100, 100, 259, 442);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -87,7 +87,7 @@ public class TeaAppV2 {
 		textPane.setEditable(false);
 		textPane.setAutoscrolls(false);
 		textPane.setBackground(Color.LIGHT_GRAY);
-		textPane.setBounds(153, 44, 209, 42);
+		textPane.setBounds(130, 44, 104, 42);
 		frame.getContentPane().add(textPane);
 		textPane.setText("TeaApp By Moi :) ");
 		textPane.setFont(new Font("UnDotum", Font.BOLD, 25));
@@ -96,7 +96,7 @@ public class TeaAppV2 {
 		
 		Button button = new Button("Start!");
 		button.setForeground(Color.CYAN);
-		button.setBounds(139, 113, 238, 51);
+		button.setBounds(0, 329, 118, 86);
 		frame.getContentPane().add(button);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -106,7 +106,7 @@ public class TeaAppV2 {
 		JRadioButton rdbtnRedTea = new JRadioButton("Red Tea");
 		rdbtnRedTea.setBorderPainted(true);
 		rdbtnRedTea.setBackground(Color.GRAY);
-		rdbtnRedTea.setBounds(21, 79, 97, 67);
+		rdbtnRedTea.setBounds(0, 78, 118, 86);
 		frame.getContentPane().add(rdbtnRedTea);
 		//rdbtnRedTea.setOpaque(false);
 		rdbtnRedTea.setForeground(Color.red);
@@ -116,7 +116,7 @@ public class TeaAppV2 {
 		JRadioButton rdbtnBlackTea = new JRadioButton("Black Tea");
 		rdbtnBlackTea.setBorderPainted(true);
 		rdbtnBlackTea.setBackground(Color.GRAY);
-		rdbtnBlackTea.setBounds(21, 147, 97, 67);
+		rdbtnBlackTea.setBounds(0, 163, 118, 86);
 		frame.getContentPane().add(rdbtnBlackTea);
 		//rdbtnBlackTea.setOpaque(false);
 		rdbtnBlackTea.setForeground(Color.black);
@@ -126,7 +126,7 @@ public class TeaAppV2 {
 		JRadioButton rdbtnGreenTea = new JRadioButton("Green Tea");
 		rdbtnGreenTea.setBorderPainted(true);
 		rdbtnGreenTea.setBackground(Color.GRAY);
-		rdbtnGreenTea.setBounds(21, 11, 97, 67);
+		rdbtnGreenTea.setBounds(0, 0, 118, 86);
 		frame.getContentPane().add(rdbtnGreenTea);
 		//rdbtnGreenTea.setOpaque(false);
 		rdbtnGreenTea.setForeground(Color.green);
@@ -138,17 +138,12 @@ public class TeaAppV2 {
 		Custom.setFont(new Font("Roboto", Font.BOLD, 13));
 		Custom.setBorderPainted(true);
 		Custom.setBackground(Color.GRAY);
-		Custom.setBounds(12, 220, 112, 55);
+		Custom.setBounds(0, 246, 118, 86);
 		frame.getContentPane().add(Custom);
 		teaType.add(Custom);
 		
 		//Boton
 		FuncionCalcula (rdbtnRedTea,rdbtnGreenTea,rdbtnBlackTea,Custom, textPane, button);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("/home/moiseg/eclipse-workspace/2DAM-INTERFACE/Tea.gif"));
-		lblNewLabel.setBounds(153, 170, 209, 105);
-		frame.getContentPane().add(lblNewLabel);
 		
 	
 		
@@ -184,6 +179,7 @@ public class TeaAppV2 {
             		ReproducirSonido(ready);
 					timer1.stop();
 					time.setText( "Finish");
+					System.restart();
 				}
             }
           
